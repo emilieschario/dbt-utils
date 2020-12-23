@@ -50,7 +50,8 @@ Arguments:
                then_value=1,
                else_value=0,
                quote_identifiers=True,
-               distinct=False) %}
+               distinct=False
+           ) %}
   {% for v in values %}
     {{ agg }}(
       {% if distinct %} distinct {% endif %}
@@ -64,7 +65,7 @@ Arguments:
       {% if quote_identifiers %}
             as {{ adapter.quote(prefix ~ v ~ suffix) }}
       {% else %}
-        as {{prefix ~ v ~ suffix }}
+        as ({{ dbt_utils.slugify(prefix ~ v ~ suffix) }})
       {% endif %}
     {% endif %}
     {% if not loop.last %},{% endif %}
